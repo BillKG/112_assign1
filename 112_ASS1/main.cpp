@@ -8,9 +8,26 @@
 
 #include <iostream>
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    //comment
-    std::cout << "Hello, World!\n";
+using namespace std;
+
+int main()
+{
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    system ("PAUSE");
     return 0;
 }
