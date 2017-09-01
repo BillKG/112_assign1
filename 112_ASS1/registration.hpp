@@ -10,5 +10,15 @@
 #define registration_hpp
 
 #include <stdio.h>
+#include "students.hpp"
+
+class registration:public students
+{
+private:
+    string currentregis;
+public:
+    void set_currentregis(string);
+    string get_currentregis();
+};
 
 #endif /* registration_hpp */

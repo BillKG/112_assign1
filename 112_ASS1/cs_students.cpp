@@ -7,3 +7,13 @@
 //
 
 #include "cs_students.hpp"
+
+void cs_students::set_passedcourses(string passedcourses)
+{
+    this -> passedcourses= passedcourses;
+    
+}
+string cs_students::get_passedcourses()
+{
+    return passedcourses;
+}

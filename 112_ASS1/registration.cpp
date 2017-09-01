@@ -7,3 +7,13 @@
 //
 
 #include "registration.hpp"
+
+void registration::set_currentregis(string currentregis)
+{
+    this-> currentregis= currentregis;
+}
+string registration::get_currentregis()
+{
+    return currentregis;
+}
+

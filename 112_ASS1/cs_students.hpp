@@ -10,5 +10,16 @@
 #define cs_students_hpp
 
 #include <stdio.h>
+#include "students.hpp"
+
+class cs_students:public students
+{
+private:
+    string passedcourses;
+public:
+    void set_passedcourses(string);
+    string get_passedcourses();
+    
+};
 
 #endif /* cs_students_hpp */
