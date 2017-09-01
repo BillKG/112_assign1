@@ -12,27 +12,34 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
 class students
 {
 private:
+    string id;
     string lname;
     string fname;
     int age;
     string phone;
     
 public:
+    void set_id(string);
     void set_lname(string);
     void set_fname(string);
     void set_age(int);
     void set_phone(string);
     
+    string get_id();
     string get_lname();
     string get_fname();
     int get_age();
     string get_phone();
+    
+    void display_all(students student[], int size);
+    void discard_line(ifstream &in);
 };
 
 #endif /* students_hpp */

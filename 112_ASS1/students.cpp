@@ -8,6 +8,10 @@
 
 #include "students.hpp"
 
+void students::set_id(string id)
+{
+    this -> id = id;
+}
 void students::set_lname(string lname)
 {
     this-> lname=lname;
@@ -23,6 +27,11 @@ void students::set_age(int age)
 void students::set_phone(string phone)
 {
     this -> phone=phone;
+}
+
+string students::get_id()
+{
+    return id;
 }
 
 string students::get_lname()
@@ -41,4 +50,27 @@ string students::get_phone()
 {
     return phone;
 }
+
+void students::display_all(students student[], int size)
+{
+    cout<<"\n\tSTUDENTS AT USP\n";
+    cout<<"\n\tID"<<"\tLast Name"<<"\tFirst Name"<<"\tAGE"<<"\tPHONE\n";
+    
+    for(int i =0; i<size ; i++)
+    {
+        cout<<"\t"<<student[i].get_id()<<"\t"<<student[i].get_lname()<<"\t"<<student[i].get_fname()<<"\t"<<student[i].get_age()<<"\t"<<student[i].get_phone()<<"\n";
+        
+    }
+    
+}
+
+void students::discard_line(ifstream &in)
+{
+    char c;
+    
+    do
+   	    in.get(c);
+    while (c!='\n');
+}
+
 
