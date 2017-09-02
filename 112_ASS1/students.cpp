@@ -58,7 +58,7 @@ void students::display_all(students student[], int size)
     
     for(int i =0; i<size ; i++)
     {
-        cout<<"\t"<<student[i].get_id()<<"\t"<<student[i].get_lname()<<"\t"<<student[i].get_fname()<<"\t"<<student[i].get_age()<<"\t"<<student[i].get_phone()<<"\n";
+        cout<<"\t"<<student[i].get_id()<<"\t"<<student[i].get_lname()<<"\t\t"<<student[i].get_fname()<<"\t\t"<<student[i].get_age()<<"\t"<<student[i].get_phone()<<"\n";
         
     }
     
