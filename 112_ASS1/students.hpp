@@ -39,7 +39,6 @@ public:
     string get_phone();
     
     void display_all(students student[], int size);
-   // void discard_line(ifstream &in);
     
 };
 

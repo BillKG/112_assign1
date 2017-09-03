@@ -16,11 +16,12 @@ void intro();
 void discard_line(ifstream &in);
 void displayall();
 void display_courses();
-void display_detail();
+
 
 
 int main()
 {
+    students caller;
     char choice;
     
     intro();
@@ -163,13 +164,7 @@ void display_courses()
     
 }
 
-void display_detail()
-{
-    string item;
-    
-    
-    
-}
+
 
 
 
