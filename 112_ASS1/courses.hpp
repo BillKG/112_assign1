@@ -29,6 +29,9 @@ public:
     string get_prereq();
     int get_semester();
     
+    void display_courses(courses student[], int size);
+
+    
 };
 
 #endif /* courses_hpp */

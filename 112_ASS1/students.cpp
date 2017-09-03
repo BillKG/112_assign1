@@ -64,14 +64,6 @@ void students::display_all(students student[], int size)
     
 }
 
-void students::discard_line(ifstream &in)
-{
-    char c;
-    
-    do
-   	    in.get(c);
-    while (c!='\n');
-}
 
 
 

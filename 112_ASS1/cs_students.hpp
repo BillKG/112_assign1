@@ -19,7 +19,6 @@ private:
 public:
     void set_passedcourses(string);
     string get_passedcourses();
-    
 };
 
 #endif /* cs_students_hpp */
