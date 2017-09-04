@@ -8,6 +8,7 @@
 
 #include "students.hpp"
 #include "courses.hpp"
+#include "registration.hpp"
 
 
 const int MAX_SIZE = 100;
@@ -16,7 +17,7 @@ void intro();
 void discard_line(ifstream &in);
 void displayall();
 void display_courses();
-
+void course_lookup();
 
 
 int main()
@@ -50,7 +51,7 @@ int main()
                 display_courses();
                 break;
             case '4':
-                
+                course_lookup();
                 break;
             case '5':
                
@@ -161,6 +162,53 @@ void display_courses()
     }
     
     caller.courses::display_courses(c1, tot_records);
+    
+}
+
+void course_lookup()
+{
+    registration r1[MAX_SIZE];
+    students s2[MAX_SIZE];
+    ifstream registerstudents;
+    int tot_records;
+    
+    registerstudents.open("/Users/NAISUA/Desktop/txt_for_ass/Registration.txt");
+    
+    
+    if(!registerstudents)
+    {
+        cerr<<"File could not be opened"<<endl;
+        system("PAUSE");
+        exit(1);
+    }
+    
+    else
+    {
+        discard_line(registerstudents);
+        
+        string id1,c1;
+        
+        tot_records=0;
+        
+        while(registerstudents>>id1>>c1)
+        {
+            r1[tot_records].set_rid(id1);
+            r1[tot_records].set_currentregis(c1);
+            tot_records++;
+        }
+        
+        
+        
+        registerstudents.close();
+    }
+
+    for(int i =0; i<tot_records ; i++)
+    {
+        cout<<"\t"<<r1[i].get_rid()<<"\t"<<r1[i].get_currentregis()<<"\t\t\n";
+        
+        
+    }
+
     
 }
 

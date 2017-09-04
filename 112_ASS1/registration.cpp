@@ -17,3 +17,12 @@ string registration::get_currentregis()
     return currentregis;
 }
 
+void registration::set_rid(string rid)
+{
+    this->rid=rid;
+}
+string registration::get_rid()
+{
+    return rid;
+}
+

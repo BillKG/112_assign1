@@ -10,13 +10,21 @@
 #define registration_hpp
 
 #include <stdio.h>
-#include "students.hpp"
+#include <iostream>
+#include <stdio.h>
+#include <string>
+#include <fstream>
 
-class registration:public students
+using namespace std;
+
+class registration
 {
 private:
+    string rid;
     string currentregis;
 public:
+    void set_rid(string);
+    string get_rid();
     void set_currentregis(string);
     string get_currentregis();
 };
