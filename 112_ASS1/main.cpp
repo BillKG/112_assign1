@@ -207,6 +207,8 @@ void course_lookup()
         cout<<"\t"<<r1[i].get_rid()<<"\t"<<r1[i].get_currentregis()<<"\t\t\n";
         
         
+        
+        
     }
 
     
