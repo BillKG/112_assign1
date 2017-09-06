@@ -40,7 +40,7 @@ public:
     int get_age();
     string get_phone();
     
-    void display_all(students student[], int size);
+    void display_all(students* student, int& size);
     
 };
 

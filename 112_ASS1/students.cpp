@@ -51,17 +51,18 @@ string students::get_phone()
     return phone;
 }
 
-void students::display_all(students student[], int size)
+void students::display_all(students* student, int& size)
 {
     cout<<"\n\tSTUDENTS AT USP\n";
     cout<<"\n\tID"<<"\tLast Name"<<"\tFirst Name"<<"\tAGE"<<"\tPHONE\n";
+    cout<<"\t-----------------------------------------------------";
     
     for(int i =0; i<size ; i++)
     {
-        cout<<"\t"<<student[i].get_id()<<"\t"<<student[i].get_lname()<<"\t\t"<<student[i].get_fname()<<"\t\t"<<student[i].get_age()<<"\t"<<student[i].get_phone()<<"\n";
+        cout<<"\n\t"<<student[i].get_id()<<"\t"<<student[i].get_lname()<<"\t\t"<<student[i].get_fname()<<"\t\t"<<student[i].get_age()<<"\t"<<student[i].get_phone()<<"";
         
     }
-    
+    cout<<endl;
 }
 
 

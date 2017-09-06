@@ -10,9 +10,12 @@
 #define cs_students_hpp
 
 #include <stdio.h>
-#include "students.hpp"
+#include <iostream>
+#include <string>
 
-class cs_students:public students
+using namespace std;
+
+class cs_students
 {
 private:
     string idpass;
