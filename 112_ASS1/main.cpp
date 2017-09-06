@@ -177,11 +177,10 @@ void course_lookup(string c)
     ifstream registers, rstudents;
     int tot_records2;
     int tot_records1;
-   // bool found= false;
     
     open_student(rstudents,s2, tot_records1);
     
-    registers.open("/Users/NAISUA/Desktop/txt_for_ass/Registration.txt"); //open registration txt
+    registers.open("/Users/NAISUA/Desktop/txt_for_ass/Registration.txt");
     
     
     if(!registers)
@@ -205,7 +204,7 @@ void course_lookup(string c)
             r1[tot_records2].set_currentregis(c1);
             tot_records2++;
         }
-        registers.close();                                                  //close
+        registers.close();
     }
     
     for(int i =0; i<tot_records2 ; i++)
@@ -213,12 +212,15 @@ void course_lookup(string c)
         if(r1[i].get_currentregis()==c)
         {
             r1[i].set_found(r1[i].get_rid());
-            //found=true;
+            
             for(int i =0; i<tot_records1; i++)
             {
                 if(r1[i].get_found()==s2[i].get_id())
                 {
-                    cout<<s2[i].get_id()<<s2[i].get_lname()<<s2[i].get_fname()<<s2[i].get_age()<<s2[i].get_phone();
+                    cout<<"\n\tRECORD(s) OF STUDENT DOING THIS COURSE\n";
+                    cout<<"\n\tID"<<"\tLast Name"<<"\tFirst Name"<<"\tAGE"<<"\tPHONE";
+                    cout<<"\n\t-----------------------------------------------------";
+                    cout<<"\n\t"<<s2[i].get_id()<<"\t"<<s2[i].get_lname()<<"\t\t"<<s2[i].get_fname()<<"\t\t"<<s2[i].get_age()<<"\t"<<s2[i].get_phone()<<"\n"; //working but needs to fix if there are no students doing the course or if course enetered has no students registered under it.
                 }
             }
         }
@@ -230,11 +232,7 @@ void course_lookup(string c)
 
 void open_student( ifstream& rstudents,students* s2,int& tot_records)
 {
-    //students s2[MAX_SIZE];
-    //ifstream rstudents;
-    // int tot_records;
-    
-    rstudents.open("/Users/NAISUA/Desktop/txt_for_ass/Student.txt"); //open students txt
+    rstudents.open("/Users/NAISUA/Desktop/txt_for_ass/Student.txt");
     
     if(!rstudents)
     {
@@ -262,7 +260,7 @@ void open_student( ifstream& rstudents,students* s2,int& tot_records)
             tot_records++;
         }
         
-        rstudents.close();                                                  //close
+        rstudents.close();
     }
 
 }

@@ -17,3 +17,13 @@ string cs_students::get_passedcourses()
 {
     return passedcourses;
 }
+
+void cs_students::set_idpass(string idpass)
+{
+    this -> idpass=idpass;
+}
+
+string cs_students::get_idpass()
+{
+    return idpass;
+}
