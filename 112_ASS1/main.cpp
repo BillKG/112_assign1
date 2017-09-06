@@ -17,13 +17,17 @@ void intro();
 void discard_line(ifstream &in);
 void displayall();
 void display_courses();
-void course_lookup();
+void course_lookup(string c);
+
+void open_student( ifstream& rstudents,students* s2,int& tot_records);
+//void readandset_stu(students &s2,int MAX_SIZE,string &gcourse);
 
 
 int main()
 {
     students caller;
     char choice;
+    string course;
     
     intro();
     do
@@ -51,7 +55,8 @@ int main()
                 display_courses();
                 break;
             case '4':
-                course_lookup();
+                cout<<"\n\n\tEnter Course ID: "; cin>>course;
+                course_lookup(course);
                 break;
             case '5':
                
@@ -165,17 +170,21 @@ void display_courses()
     
 }
 
-void course_lookup()
+void course_lookup(string c)
 {
     registration r1[MAX_SIZE];
     students s2[MAX_SIZE];
-    ifstream registerstudents;
-    int tot_records;
+    ifstream registers, rstudents;
+    int tot_records2;
+    int tot_records1;
+   // bool found= false;
     
-    registerstudents.open("/Users/NAISUA/Desktop/txt_for_ass/Registration.txt");
+    open_student(rstudents,s2, tot_records1);
+    
+    registers.open("/Users/NAISUA/Desktop/txt_for_ass/Registration.txt"); //open registration txt
     
     
-    if(!registerstudents)
+    if(!registers)
     {
         cerr<<"File could not be opened"<<endl;
         system("PAUSE");
@@ -184,36 +193,76 @@ void course_lookup()
     
     else
     {
-        discard_line(registerstudents);
+        discard_line(registers);
         
         string id1,c1;
         
+        tot_records2=0;
+        
+        while(registers>>id1>>c1)
+        {
+            r1[tot_records2].set_rid(id1);
+            r1[tot_records2].set_currentregis(c1);
+            tot_records2++;
+        }
+        registers.close();                                                  //close
+    }
+    
+    for(int i =0; i<tot_records2 ; i++)
+    {
+        if(r1[i].get_currentregis()==c)
+        {
+            r1[i].set_found(r1[i].get_rid());
+            //found=true;
+            for(int i =0; i<tot_records1; i++)
+            {
+                if(r1[i].get_found()==s2[i].get_id())
+                {
+                    cout<<s2[i].get_id()<<s2[i].get_lname()<<s2[i].get_fname()<<s2[i].get_age()<<s2[i].get_phone();
+                }
+            }
+        }
+      
+    }
+    
+   
+}
+
+void open_student( ifstream& rstudents,students* s2,int& tot_records)
+{
+    //students s2[MAX_SIZE];
+    //ifstream rstudents;
+    // int tot_records;
+    
+    rstudents.open("/Users/NAISUA/Desktop/txt_for_ass/Student.txt"); //open students txt
+    
+    if(!rstudents)
+    {
+        cerr<<"File could not be opened"<<endl;
+        system("PAUSE");
+        exit(1);
+    }
+    
+    else
+    {
+        discard_line(rstudents);
+        
+        int age;
+        string id,lname,fname,phone;
+        
         tot_records=0;
         
-        while(registerstudents>>id1>>c1)
+        while(rstudents>>id>>lname>>fname>>age>>phone)
         {
-            r1[tot_records].set_rid(id1);
-            r1[tot_records].set_currentregis(c1);
+            s2[tot_records].set_id(id);
+            s2[tot_records].set_lname(lname);
+            s2[tot_records].set_fname(fname);
+            s2[tot_records].set_age(age);
+            s2[tot_records].set_phone(phone);
             tot_records++;
         }
         
-        
-        
-        registerstudents.close();
+        rstudents.close();                                                  //close
     }
 
-    for(int i =0; i<tot_records ; i++)
-    {
-        cout<<"\t"<<r1[i].get_rid()<<"\t"<<r1[i].get_currentregis()<<"\t\t\n";
-        
-        
-    }
-
-    
 }
-
-
-
-
-
-

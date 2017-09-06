@@ -7,6 +7,8 @@
 //
 
 #include "registration.hpp"
+#include <fstream>
+#include "students.hpp"
 
 void registration::set_currentregis(string currentregis)
 {
@@ -26,3 +28,11 @@ string registration::get_rid()
     return rid;
 }
 
+void registration::set_found(string found)
+{
+    this -> found = found;
+}
+string registration::get_found()
+{
+    return found;
+}

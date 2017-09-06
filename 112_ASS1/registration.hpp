@@ -22,11 +22,16 @@ class registration
 private:
     string rid;
     string currentregis;
+    string found;
 public:
+    
     void set_rid(string);
     string get_rid();
     void set_currentregis(string);
     string get_currentregis();
+    
+    void set_found(string);
+    string get_found();
 };
 
 #endif /* registration_hpp */
