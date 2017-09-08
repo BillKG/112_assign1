@@ -20,23 +20,37 @@ void displayall();
 void display_courses();
 void course_lookup(string c);
 
+
 void open_coursestxt(ifstream& cstudent, courses* c1, int& tot_records);
 void open_studenttxt( ifstream& rstudents,students* s2,int& tot_records);
-void open_registrationtxt(ifstream& registers, registration* r1,int& tot_records);
-void open_registrationtxt(ifstream& csflie, cs_students * cs1,int& tot_records);
-//void readandset_stu(students &s2,int MAX_SIZE,string &gcourse);
+void open_registrationtxt(ifstream& registers, registration* r1,int& tot_records2);
+void open_cstxt(ifstream& csflie, cs_students * cs1,int& tot_records);
+
 
 
 int main()
 {
-    students caller;
     char choice;
     string course;
     
+   
+    
     intro();
+
     do
     {
+        //for student text file independent reading
+        //------------------------------------------------//
+        students s1[MAX_SIZE],caller;
+        ifstream rstudents;
+        int tot_records=0;
+        
+        open_studenttxt(rstudents,s1,tot_records);
+        
+        //------------------------------------------------//
+        
         // system("cls");
+        
         cout<<"\n\n\n\tMAIN MENU";
         cout<<"\n\n\t1. EXIT";
         cout<<"\n\n\t2. Display all students at USP";
@@ -63,7 +77,7 @@ int main()
                 course_lookup(course);
                 break;
             case '5':
-               
+             
             case '6':
                
                 break;
@@ -93,16 +107,16 @@ void discard_line(ifstream &in)
     
     do
    	    in.get(c);
-    while (c!='\n');
+    while (c !='\n');
 }
 
 void displayall()
 {
     students s1[MAX_SIZE],caller;
-    ifstream rstudents;
+    //ifstream rstudents;
     int tot_records=0;
     
-    open_studenttxt(rstudents,s1,tot_records);
+    //open_studenttxt(rstudents,s1,tot_records);
     caller.students::display_all(s1, tot_records);
 }
 
@@ -145,7 +159,7 @@ void course_lookup(string c)
                 }
             }
         }
-      
+        
     }
 }
 
@@ -247,7 +261,7 @@ void open_registrationtxt(ifstream& registers, registration* r1,int& tot_records
 
 }
 
-void open_registrationtxt(ifstream& csflie, cs_students * cs1,int& tot_records)
+void open_cstxt(ifstream& csflie, cs_students * cs1,int& tot_records)
 {
     csflie.open("/Users/NAISUA/Desktop/txt_for_ass/CSstudents.txt");
     

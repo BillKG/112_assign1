@@ -27,6 +27,7 @@ public:
     
     void set_rid(string);
     string get_rid();
+    
     void set_currentregis(string);
     string get_currentregis();
     

@@ -16,7 +16,7 @@
 
 using namespace std;
 
-//const int MAX_SIZE = 100;
+//const int MAX_SIZE1 = 100;
 
 class students
 {
