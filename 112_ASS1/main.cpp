@@ -16,9 +16,9 @@ const int MAX_SIZE = 100;
 
 void intro();
 void discard_line(ifstream &in);
-void displayall();
-void display_courses();
-void course_lookup(string c);
+void displayall(students s1[],int tot_records );
+void display_courses( courses c1[MAX_SIZE], int tot_records);
+void course_lookup(string c, registration r1[], int tot_records2, students s2[], int tot_records1);
 
 
 void open_coursestxt(ifstream& cstudent, courses* c1, int& tot_records);
@@ -33,24 +33,27 @@ int main()
     char choice;
     string course;
     
-   
+    students s1[MAX_SIZE];
+    ifstream rstudents;
+    int stot_records=0;
+    open_studenttxt(rstudents,s1,stot_records);
+    
+    courses c1[MAX_SIZE];
+    ifstream cstudent;
+    int ctot_records =0;
+    open_coursestxt(cstudent, c1, ctot_records);
+    
+    registration r1[MAX_SIZE];
+    ifstream registers;
+    int rtot_records=0;
+    open_registrationtxt(registers, r1,rtot_records);
+    
     
     intro();
 
     do
     {
-        //for student text file independent reading
-        //------------------------------------------------//
-        students s1[MAX_SIZE],caller;
-        ifstream rstudents;
-        int tot_records=0;
-        
-        open_studenttxt(rstudents,s1,tot_records);
-        
-        //------------------------------------------------//
-        
         // system("cls");
-        
         cout<<"\n\n\n\tMAIN MENU";
         cout<<"\n\n\t1. EXIT";
         cout<<"\n\n\t2. Display all students at USP";
@@ -61,23 +64,26 @@ int main()
         cout<<"\n\n\t7. Display number of semesters a student will take to complete all CS courses";
         cout<<"\n\n\tSelect Your Option (1-6) ";cin>>choice;
         // system("cls");
+        
         switch(choice)
         {
             case '1':
                cout<<"\n\n\tThanks for using course approval system\n\n\n";
                 break;
             case '2':
-                displayall();
+                displayall(s1, stot_records);
                 break;
             case '3':
-                display_courses();
+                display_courses(c1, ctot_records);
                 break;
             case '4':
-                cout<<"\n\n\tEnter Course ID: "; cin>>course;
-                course_lookup(course);
+                cout<<"\n\n\tEnter Course ID: ";
+                cin>>course;
+                course_lookup(course, r1, rtot_records, s1, stot_records);
                 break;
             case '5':
-             
+                
+                break;
             case '6':
                
                 break;
@@ -110,38 +116,24 @@ void discard_line(ifstream &in)
     while (c !='\n');
 }
 
-void displayall()
+void displayall(students s1[],int tot_records )
 {
-    students s1[MAX_SIZE],caller;
-    //ifstream rstudents;
-    int tot_records=0;
-    
-    //open_studenttxt(rstudents,s1,tot_records);
+    students caller;
     caller.students::display_all(s1, tot_records);
 }
 
-void display_courses()
+void display_courses( courses c1[], int tot_records)
 {
-    courses c1[MAX_SIZE],caller;
+    courses caller;
     ifstream cstudent;
-    int tot_records =0;
     
     open_coursestxt(cstudent, c1, tot_records);
     caller.courses::display_courses(c1, tot_records);
     
 }
 
-void course_lookup(string c)
+void course_lookup(string c, registration r1[], int tot_records2, students s2[], int tot_records1)
 {
-    registration r1[MAX_SIZE];
-    students s2[MAX_SIZE];
-    ifstream registers, rstudents;
-    int tot_records2;
-    int tot_records1;
-    
-    open_studenttxt(rstudents,s2, tot_records1);
-    open_registrationtxt(registers, r1,tot_records2);
-    
     for(int i =0; i<tot_records2 ; i++)
     {
         if(r1[i].get_currentregis()==c)
