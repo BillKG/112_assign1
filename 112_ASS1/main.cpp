@@ -20,6 +20,12 @@ void displayall(students s1[],int tot_records );
 void display_courses( courses c1[MAX_SIZE], int tot_records);
 void course_lookup(string c, registration r1[], int tot_records2, students s2[], int tot_records1);
 
+void register_student(string id, string courser,courses c1[], int ctot_records, cs_students cs1[], int cstot_records);//op//
+
+bool idcheck(string id, string courser,courses c1[], int ctot_records,courses csingle, cs_students cs1[], int cstot_records);
+
+//bool sem_check(string courser ,courses c1[], int ctot_records, cs_students cs1[], int cstot_records);
+
 
 void open_coursestxt(ifstream& cstudent, courses* c1, int& tot_records);
 void open_studenttxt( ifstream& rstudents,students* s2,int& tot_records);
@@ -28,25 +34,33 @@ void open_cstxt(ifstream& csflie, cs_students * cs1,int& tot_records);
 
 
 
+
 int main()
 {
     char choice;
-    string course;
-    
-    students s1[MAX_SIZE];
+    string course,id, courser;
     ifstream rstudents;
+    
+    //students txt
+    students s1[MAX_SIZE];
     int stot_records=0;
     open_studenttxt(rstudents,s1,stot_records);
     
+    //courses txt
     courses c1[MAX_SIZE];
-    ifstream cstudent;
     int ctot_records =0;
-    open_coursestxt(cstudent, c1, ctot_records);
+    open_coursestxt(rstudents, c1, ctot_records);
     
+    //registration txt
     registration r1[MAX_SIZE];
-    ifstream registers;
     int rtot_records=0;
-    open_registrationtxt(registers, r1,rtot_records);
+    open_registrationtxt(rstudents, r1,rtot_records);
+    
+    //cs students txt
+    cs_students cs1[MAX_SIZE];
+    int cstot_records=0;
+    open_cstxt(rstudents, cs1, cstot_records);
+    
     
     
     intro();
@@ -77,20 +91,19 @@ int main()
                 display_courses(c1, ctot_records);
                 break;
             case '4':
-                cout<<"\n\n\tEnter Course ID: ";
-                cin>>course;
+                cout<<"\n\n\tEnter Course ID: ";cin>>course;
                 course_lookup(course, r1, rtot_records, s1, stot_records);
                 break;
             case '5':
-                
+                cout<<"\n\n\tEnter your ID: ";cin>>id;
+                cout<<"\n\tEnter Course you would like to register to: ";cin>>courser;
+                register_student(id, courser, c1,  ctot_records,  cs1, cstot_records);
                 break;
             case '6':
-               
+                
                 break;
             case '7':
                
-                break;
-            case '8':
                 break;
             default :cout<<"\a";
         }
@@ -125,9 +138,6 @@ void displayall(students s1[],int tot_records )
 void display_courses( courses c1[], int tot_records)
 {
     courses caller;
-    ifstream cstudent;
-    
-    open_coursestxt(cstudent, c1, tot_records);
     caller.courses::display_courses(c1, tot_records);
     
 }
@@ -160,7 +170,7 @@ void open_coursestxt(ifstream& cstudent, courses* c1, int& tot_records)
     cstudent.open("/Users/NAISUA/Desktop/txt_for_ass/Courses.txt");
     if(!cstudent)
     {
-        cerr<<"File could not be opened"<<endl;
+        cerr<<"File could not be opened4"<<endl;
         system("PAUSE");
         exit(1);
     }
@@ -192,7 +202,7 @@ void open_studenttxt( ifstream& rstudents,students* s2,int& tot_records)
     
     if(!rstudents)
     {
-        cerr<<"File could not be opened"<<endl;
+        cerr<<"File could not be opened1"<<endl;
         system("PAUSE");
         exit(1);
     }
@@ -229,7 +239,7 @@ void open_registrationtxt(ifstream& registers, registration* r1,int& tot_records
     
     if(!registers)
     {
-        cerr<<"File could not be opened"<<endl;
+        cerr<<"File could not be opened2"<<endl;
         system("PAUSE");
         exit(1);
     }
@@ -255,12 +265,12 @@ void open_registrationtxt(ifstream& registers, registration* r1,int& tot_records
 
 void open_cstxt(ifstream& csflie, cs_students * cs1,int& tot_records)
 {
-    csflie.open("/Users/NAISUA/Desktop/txt_for_ass/CSstudents.txt");
+    csflie.open("/Users/NAISUA/Desktop/txt_for_ass/CSstduents.txt");
     
     
     if(!csflie)
     {
-        cerr<<"File could not be opened"<<endl;
+        cerr<<"File could not be opened3"<<endl;
         system("PAUSE");
         exit(1);
     }
@@ -282,4 +292,101 @@ void open_cstxt(ifstream& csflie, cs_students * cs1,int& tot_records)
         csflie.close();
     }
 }
+
+void register_student(string id, string courser,courses c1[], int ctot_records, cs_students cs1[], int cstot_records)
+{
+    courses csingle;
+    
+    cout<<"\n"<<idcheck(id,courser, c1,  ctot_records,csingle,  cs1, cstot_records );
+    
+    /*if(idcheck(id,courser, c1,  ctot_records,  cs1, cstot_records )==1)
+    {
+        cout<<"STUDENT HAS PASSED THIS COURSE";
+    }
+    else
+    {
+        cout<<"FAILED OR HASNT DONE COURSE YET";
+    }*/
+    
+}
+
+bool idcheck(string id, string courser,courses c1[], int ctot_records,courses csingle, cs_students cs1[], int cstot_records)
+{
+    bool pass = true;
+    
+    for(int i =0; i < ctot_records; i++)
+    {
+        if (c1[i].get_course()==courser)
+        {
+            cout<<"i = "<<i<<"\n";
+            c1[i].set_foundpreq(c1[i].get_prereq());
+            //cout<<"\n"<<c1[i].get_foundpreq()<<"\n";
+        }
+        else
+        {
+                cout<<"NA";
+        }
+    }
+    
+    for(int i = 0; i<cstot_records; i++)
+    {
+        if(cs1[i].get_idpass()== id)
+        {
+            //cout<<"\n"<<cs1[i].get_idpass()<<"="<<id<<"\n";
+            
+            for(int i = 0; i<cstot_records; i++)
+            {
+                if(c1[i].get_foundpreq() == cs1[i].get_passedcourses())
+                {
+                  //  cout<<"\n"<<c1[i].get_foundpreq()<<"="<<cs1[i].get_passedcourses()<<"\n";
+                    pass= true;
+                    return pass;
+                }
+                else
+                {
+                    pass= false;
+                }
+            }
+
+        }
+        else
+        {
+            pass= false;
+        }
+        
+    }
+    
+    return pass;
+}
+
+/*bool sem_check(string courser ,courses c1[], int ctot_records, cs_students cs1[], int cstot_records)
+{
+    bool semcheck = true;
+    int semester = 2 | 0;
+    
+    for(int i=0; i<ctot_records; i++)
+    {
+        if(courser==c1[i].get_course())
+        {
+            c1[i].set_foundsem(c1[i].get_semester());
+        }
+    }
+    
+    for(int i=0; i<ctot_records; i++)
+    {
+        if(semester==c1[i].get_foundsem())
+        {
+            semcheck=true;
+        }
+        else
+        {
+            semcheck=false;
+        }
+    }
+    
+    return semcheck;
+}
+ */
+
+
 

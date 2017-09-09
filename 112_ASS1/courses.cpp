@@ -23,6 +23,16 @@ void courses::set_semester(int semester)
     this -> semester= semester;
 }
 
+void courses::set_foundpreq(string foundpreq)
+{
+    this-> foundpreq = foundpreq;
+    
+}
+string courses::get_foundpreq()
+{
+    return foundpreq;
+}
+
 string courses::get_course()
 {
     return course;
@@ -49,5 +59,15 @@ void courses::display_courses(courses student[], int size)
         
     }
     
+}
+
+void courses::set_foundsem(int foundsem)
+{
+    this->foundsem=foundsem;
+}
+
+int courses::get_foundsem()
+{
+    return foundsem;
 }
 
