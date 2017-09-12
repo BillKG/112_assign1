@@ -15,24 +15,27 @@
 const int MAX_SIZE = 100;
 
 void intro();
-
-void discard_line(ifstream &in); //for reading files
-
 void displayall(students s1[],int tot_records ); //2
 void display_courses( courses c1[MAX_SIZE], int tot_records); //3
 void course_lookup(string c, registration r1[], int tot_records2, students s2[], int tot_records1); //4
-
-void open_coursestxt(ifstream& cstudent, courses* c1, int& tot_records);
-void open_studenttxt( ifstream& rstudents,students* s2,int& tot_records);
-void open_registrationtxt(ifstream& registers, registration* r1,int& tot_records2);
-void open_cstxt(ifstream& csflie, cs_students * cs1,int& tot_records);
-
-void register_student(string id, string courser,courses c1[], int ctot_records, cs_students cs1[], int cstot_records, registration r1[], int rtot_records); //5
+void displaypersonal(int numid, students s2[], int tot_records1); //4
+void register_student(string id, string course, courses c1[], int ctot_records, cs_students cs1[], int cstot_records, registration r1[], int rtot_records); //5
 bool prereq_check(string id, string courser,courses c1[], int ctot_records,courses csingle, cs_students cs1[], int cstot_records); //5
 bool sem_check(string courser ,courses csingle,courses c1[], int ctot_records, cs_students cs1[], int cstot_records); //5
 bool already_registered(string id, string courser, registration r1[], int rtot_records);//5
 bool alreadydone_course(string id, string course,cs_students csptxt[],int cstot_records); //5
 bool donealllevel_check(string id, string course, courses c1[], int ctot_records, cs_students cs1[], int cstot_records); //5
+bool enrollmentcounter(string id,registration r1[], int rtot_records); //5
+void write_registrations(string id, string course); //5
+void display_registrations(registration r1[], int rtot_records); //6
+void display_semsters(string id,registration r1[], int rtot_records,cs_students cs1[], int cstot_records); //7
+
+void discard_line(ifstream &in); //for reading files
+void open_coursestxt(ifstream& cstudent, courses* c1, int& tot_records);
+void open_studenttxt( ifstream& rstudents,students* s2,int& tot_records);
+void open_registrationtxt(ifstream& registers, registration* r1,int& tot_records2);
+void open_cstxt(ifstream& csflie, cs_students * cs1,int& tot_records);
+
 
 
 
@@ -77,7 +80,7 @@ int main()
         cout<<"\n\n\t5. Register a student into a course";
         cout<<"\n\n\t6. Display all registration";
         cout<<"\n\n\t7. Display number of semesters a student will take to complete all CS courses";
-        cout<<"\n\n\tSelect Your Option (1-6) ";cin>>choice;
+        cout<<"\n\n\tSelect Your Option (1-7): ";cin>>choice;
         // system("cls");
         
         switch(choice)
@@ -92,20 +95,39 @@ int main()
                 display_courses(c1, ctot_records);
                 break;
             case '4':
-                cout<<"\n\n\tEnter Course ID: ";cin>>course;
+               cout<<"\n\n\tEnter Course ID: ";cin>>course;
+               while (course!="cs111"&& course !="cs112"&& course != "cs240"&& course !="cs241"&& course !="cs214"&& course !="cs215"&& course !="cs218"&& course !="cs310"&&course != "cs311"&&course !="cs317"&&course !="cs318"&&course !="cs324"&&course != "cs341"){
+                    cout<<"\n\tIncorrect course entered.....re-enter course again: ";
+                    cin>>course;
+                }
                 course_lookup(course, r1, rtot_records, s1, stot_records);
                 break;
             case '5':
                 display.courses::display_courses( c1, ctot_records);
                 cout<<"\n\n\tEnter your ID: ";cin>>id;
+                while (id!="s111"&& id !="s222"&& id != "s333"&& id !="s444")
+                {
+                    cout<<"\n\tIncorrect ID entered.....re-enter ID again: ";
+                    cin>>id;
+                }
                 cout<<"\n\tEnter Course you would like to register to: ";cin>>courser;
+                while (courser!="cs111"&& courser !="cs112"&& courser != "cs240"&& courser !="cs241"&& courser !="cs214"&& courser !="cs215"&& courser !="cs218"&& courser !="cs310"&&courser != "cs311"&&courser !="cs317"&&courser !="cs318"&&courser !="cs324"&&courser != "cs341"){
+                    cout<<"\n\tIncorrect course entered.....re-enter course again: ";
+                    cin>>courser;
+                }
                 register_student(id, courser, c1, ctot_records, cs1, cstot_records, r1, rtot_records);
                 break;
             case '6':
-                
+                display_registrations(r1, rtot_records);
                 break;
             case '7':
-               
+                cout<<"\n\n\tEnter your ID: ";cin>>id;
+                while (id!="s111"&& id !="s222"&& id != "s333"&& id !="s444")
+                {
+                    cout<<"\n\tIncorrect ID entered.....re-enter ID again: ";
+                    cin>>id;
+                }
+                display_semsters(id, r1, rtot_records, cs1, cstot_records);
                 break;
             default :cout<<"\a";
         }
@@ -146,24 +168,63 @@ void display_courses( courses c1[], int tot_records)
 
 void course_lookup(string c, registration r1[], int tot_records2, students s2[], int tot_records1)
 {
+    registration rsingle[MAX_SIZE];
+    string f_id[MAX_SIZE];
+    int numid;
+    bool norec= false;
+    
     for(int i =0; i<tot_records2 ; i++)
     {
         if(r1[i].get_currentregis()==c)
         {
-            r1[i].set_found(r1[i].get_rid());
             
-            for(int i =0; i<tot_records1; i++)
+        }
+    }
+    
+        cout<<"\n\tRECORD(s) OF STUDENT DOING THIS COURSE\n";
+        cout<<"\n\tID"<<"\tLast Name"<<"\tFirst Name"<<"\tAGE"<<"\tPHONE";
+        cout<<"\n\t-----------------------------------------------------";
+    
+    
+    for(int i =0; i<tot_records2 ; i++)
+    {
+        if(r1[i].get_currentregis()==c)
+        {
+            rsingle[i].set_found(r1[i].get_rid());
+            
+            if(rsingle[i].get_found() == "s111")
             {
-                if(r1[i].get_found()==s2[i].get_id())
-                {
-                    cout<<"\n\tRECORD(s) OF STUDENT DOING THIS COURSE\n";
-                    cout<<"\n\tID"<<"\tLast Name"<<"\tFirst Name"<<"\tAGE"<<"\tPHONE";
-                    cout<<"\n\t-----------------------------------------------------";
-                    cout<<"\n\t"<<s2[i].get_id()<<"\t"<<s2[i].get_lname()<<"\t\t"<<s2[i].get_fname()<<"\t\t"<<s2[i].get_age()<<"\t"<<s2[i].get_phone()<<"\n"; //working but needs to fix if there are no students doing the course or if course enetered has no students registered under it.
-                }
+                numid=1;
+                displaypersonal( numid,  s2,  tot_records1);
+                norec= true;
+                
+            }
+            else if(rsingle[i].get_found() == "s222")
+            {
+                numid=2;
+                displaypersonal( numid,  s2,  tot_records1);
+                norec= true;
+            }
+            else if(rsingle[i].get_found() == "s333")
+            {
+                numid=3;
+                displaypersonal( numid,  s2,  tot_records1);
+                norec= true;
+            }
+            else
+            {
+                numid=4;
+                displaypersonal( numid,  s2,  tot_records1);
+                norec= true;
             }
         }
-        
+        else
+        {
+            if(i==tot_records2-1 && norec==0)
+            {
+            cout<<"\n\t\t\t   NO RECORDS :(";
+            }
+        }
     }
 }
 
@@ -295,14 +356,30 @@ void open_cstxt(ifstream& csflie, cs_students * cs1,int& tot_records)
     }
 }
 
-void register_student(string id, string courser,courses c1[], int ctot_records, cs_students cs1[], int cstot_records, registration r1[], int rtot_records)
+void register_student(string id, string courser, courses c1[], int ctot_records, cs_students cs1[], int cstot_records, registration r1[], int rtot_records)
 {
     courses csingle;
-    //donealllevel_check( id, courser, c1, ctot_records, cs1, cstot_records); working
-    //sem_check(courser, csingle, c1, ctot_records, cs1, cstot_records);  //working
-    //prereq_check(id, courser, c1, ctot_records, csingle, cs1, cstot_records); //working
-    //already_registered( id,  courser,  r1,  rtot_records); //working
-    //alreadydone_course(id, courser, cs1, cstot_records); //working
+    
+    bool one, two, three, four, five, six;
+    
+    
+    six=enrollmentcounter(id, r1, rtot_records);
+    five=donealllevel_check( id, courser, c1, ctot_records, cs1, cstot_records);
+    two=sem_check(courser, csingle, c1, ctot_records, cs1, cstot_records);
+    four=prereq_check(id, courser, c1, ctot_records, csingle, cs1, cstot_records);
+    one=already_registered( id,  courser,  r1,  rtot_records);
+    three=alreadydone_course(id, courser, cs1, cstot_records);
+    
+    if (one== 0 && two== 1 && three== 0 && four== 1 && five== 1 && six== 0)
+    {
+        cout<<"\n\n\tREGISTRATION APPROVED!!!";
+        write_registrations(id, courser);
+    }
+    else
+    {
+        cout<<"\n\n\tREGISTRATION NOT APPROVED!!!";
+    }
+    
     
     
 }
@@ -326,7 +403,7 @@ bool prereq_check(string id, string courser,courses c1[], int ctot_records,cours
             if(id == cs1[i].get_idpass())
                 {
                     pass= true;
-                    cout<<"FUCKING PASS";
+                    cout<<"\n\tPREREQ PASSED :)";
                     return pass;
                 }
             }
@@ -334,7 +411,7 @@ bool prereq_check(string id, string courser,courses c1[], int ctot_records,cours
             {
             if (i==cstot_records-1)
                 {
-                    cout<<"\n\tSTUDENT HASN'T PASSED OR DONE THE PREREQ COURSE "<<csingle.get_foundpreq()<<" THEREFORE STUDENT IS NOT ALLOWED TO REGISTER";
+                    cout<<"\n\tSTUDENT HASN'T PASSED OR DONE THE PREREQ COURSE "<<csingle.get_foundpreq()<<" THEREFORE STUDENT IS NOT ALLOWED TO REGISTER :(";
                     pass= false;
                 }
             }
@@ -356,7 +433,7 @@ bool sem_check(string courser ,courses csingle,courses c1[], int ctot_records, c
                 csingle.set_foundsem(c1[i].get_semester());
                 if((semester==csingle.get_foundsem() || csingle.get_foundsem()==0)&& courser==c1[i].get_course())
                 {
-                    cout<<"\n\tcourse is provided in semester 2 :) "<<"\n";
+                    cout<<"\n\tcourse is provided in semester 2 :) ";
                     semcheck=true;
                     return semcheck;
                 }
@@ -364,7 +441,7 @@ bool sem_check(string courser ,courses csingle,courses c1[], int ctot_records, c
                 {
                     if(i==end)
                     {
-                    cout<<"\n\tcourse is only provided in semester "<<csingle.get_foundsem()<<" :(\n";
+                    cout<<"\n\tcourse is only provided in semester "<<csingle.get_foundsem()<<" :(";
                     semcheck=false;
                     }
                 }
@@ -383,7 +460,7 @@ bool already_registered(string id, string courser, registration r1[], int rtot_r
         
         if(id==r1[i].get_rid() && courser== r1[i].get_currentregis())
         {
-            cout<<"\n\tALREADY REGISTERED!!!";
+            cout<<"\n\tALREADY REGISTERED!!! :(";
             registered=true;
             return registered;
         }
@@ -391,7 +468,7 @@ bool already_registered(string id, string courser, registration r1[], int rtot_r
         {
             if(i==rtot_records-1)
             {
-                cout<<"\n\tNOT REGISTERED";
+                cout<<"\n\tNOT ALREADY REGISTERED :)";
                 registered= false;
             }
         }
@@ -413,9 +490,7 @@ bool donealllevel_check(string id, string course, courses c1[], int ctot_records
     for(int i= 0; i<ctot_records; i++)
     {
         levelpassc[i]=c1[i].get_course()[2];
-        //cout<<"\n\t"<<levelpassc[i];
     }
-    
     
     for(int i=0;i<cstot_records;i++)
     {
@@ -442,22 +517,20 @@ bool donealllevel_check(string id, string course, courses c1[], int ctot_records
     
     
     
-    
-    
     for(int i=0;i<cstot_records;i++)
     {
         if(level=='2')
         {
-            if (id==cs1[i].get_idpass() && cs1[i].get_passedcourses()[2]=='1' && levelcounter==2)
+            if (levelcounter==2)
             {
-                cout<<"\n\tall 100 levels compeleted";
+                cout<<"\n\tall 100 levels compeleted :)";
                 done=true;
                 return done;
             }
             
             else
             {
-                cout<<"\n\tall 100 levels not compeleted";
+                cout<<"\n\tall 100 levels not compeleted :(";
                 done=false;
                 return done;
             }
@@ -465,7 +538,7 @@ bool donealllevel_check(string id, string course, courses c1[], int ctot_records
         
         if(level=='3')
         {
-            if (id==cs1[i].get_idpass() && cs1[i].get_passedcourses()[2]=='2' && levelcounter==5)
+            if (levelcounter==5)
             {
                 cout<<"\n\tall 200 levels compeleted :)";
                 done=true;
@@ -485,7 +558,7 @@ bool donealllevel_check(string id, string course, courses c1[], int ctot_records
             if(levelcounter==0)
             {
                 done=true;
-                cout<<"\n\t100 level";
+                cout<<"\n\t100 level :)";
                 return done;
             }
         }
@@ -493,10 +566,37 @@ bool donealllevel_check(string id, string course, courses c1[], int ctot_records
     return done;
 }
 
-bool enrollmentcounter()
+bool enrollmentcounter(string id,registration r1[], int rtot_records)
 {
     const int num =2;
+    int wili=0;
     bool counter = true;
+    ifstream rstudents;
+    
+    open_registrationtxt(rstudents, r1,rtot_records);
+    
+    for(int i =0; i<rtot_records; i++)
+    {
+        if (id==r1[i].get_rid())
+        {
+            wili=wili+1;
+        }
+    }
+    
+      if (wili==num)
+        {
+            cout<<"\n\tREGISTRATION LIMIT REACHED :(";
+            counter = true;
+            return counter;
+        }
+    else
+        {
+            cout<<"\n\tREGISTRATION FOR "<<2-wili<<" COURSE(S) CAN BE DONE :)";
+            counter = false;
+            return counter;
+        }
+    
+    
     
     
     return counter;
@@ -510,7 +610,7 @@ bool alreadydone_course(string id, string course,cs_students csptxt[],int cstot_
     {
         if(id==csptxt[i].get_idpass() && course== csptxt[i].get_passedcourses())
         {
-            cout<<"\n\tSTUDENT HAS ALREADY DONE THIS COURSE";
+            cout<<"\n\tSTUDENT HAS ALREADY DONE THIS COURSE :(";
             done=true;
             return done;
         }
@@ -530,11 +630,69 @@ bool alreadydone_course(string id, string course,cs_students csptxt[],int cstot_
 }
 
 
-/*void display_reason()
+void write_registrations(string id, string course)
 {
-    string reason;
+    ofstream rstudent;
     
-}*/
+    rstudent.open("/Users/NAISUA/Desktop/txt_for_ass/Registration.txt", ofstream::out | ofstream:: app);
+    
+    rstudent<<"\n"<<id<<" "<<course;
+    
+    rstudent.close();
+    
+}
+
+void display_registrations(registration r1[], int rtot_records)
+{
+    ifstream rstudents;
+    
+    open_registrationtxt(rstudents, r1,rtot_records);
+    
+    cout<<"\n\tREGISTRATIONS\n";
+    cout<<"\n\tID"<<"    COURSES\n";
+    cout<<"\t-------------\n";
+    
+    for(int i =0; i<rtot_records ; i++)
+    {
+        cout<<"\t"<<r1[i].get_rid()<<"\t"<<r1[i].get_currentregis()<<"\n";
+        
+    }
+}
+
+
+void displaypersonal(int numid, students s2[], int tot_records1)
+{
+    
+    cout<<"\n\t"<<s2[numid-1].get_id()<<"\t"<<s2[numid-1].get_lname()<<"\t\t"<<s2[numid-1].get_fname()<<"\t\t"<<s2[numid-1].get_age()<<"\t"<<s2[numid-1].get_phone()<<"";
+    
+}
+
+void display_semsters(string id,registration r1[], int rtot_records,cs_students cs1[], int cstot_records)
+{
+    int counterr=0;
+    int countercs=0;
+    const int tot_courses=13;
+    
+    
+    for(int i=0; i<rtot_records; i++)
+    {
+        if(id==r1[i].get_rid())
+        {
+            counterr++;
+        }
+        
+    }
+    for(int i=0; i<cstot_records; i++)
+    {
+        if(id==cs1[i].get_idpass())
+        {
+            countercs++;
+        }
+    }
+    
+    cout<<"\n\tYou have "<<tot_courses-(counterr+countercs)<<" semster(s) to complete your program. GOOD LUCK :)";
+    
+}
 
 
 
