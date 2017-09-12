@@ -51,7 +51,8 @@ int courses::get_semester()
 void courses::display_courses(courses student[], int size)
 {
     cout<<"\n\tCOURSES AT USP\n";
-    cout<<"\n\tCourse"<<"\tPrereq"<<"\tSemester\n";
+    cout<<"\n\tCourse"<<"\tPrereq"<<"    Semester\n";
+    cout<<"\t--------------------------\n";
     
     for(int i =0; i<size ; i++)
     {

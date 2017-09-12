@@ -21,6 +21,7 @@ private:
     string idpass;
     string passedcourses;
 public:
+    
     void set_idpass(string);
     string get_idpass();
     void set_passedcourses(string);
