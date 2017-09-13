@@ -1,10 +1,14 @@
-//
-//  main.cpp
-//  112_ASS1
-//
-//  Created by Filimoni Naisua on 31/08/2017.
-//  Copyright © 2017 Filimoni Naisua. All rights reserved.
-//
+//***************************************************************
+//NAME : FILIMONI NAISUA
+//ID : S11124711
+//Copyright © 2017 Filimoni Naisua. All rights reserved.
+//***************************************************************
+
+
+
+//***************************************************************
+//                   HEADER FILE USED IN PROJECT
+//***************************************************************
 
 #include "students.hpp"
 #include "courses.hpp"
@@ -14,23 +18,29 @@
 
 const int MAX_SIZE = 100;
 
-void intro();
-void displayall(students s1[],int tot_records ); //2
-void display_courses( courses c1[MAX_SIZE], int tot_records); //3
-void course_lookup(string c, registration r1[], int tot_records2, students s2[], int tot_records1); //4
-void displaypersonal(int numid, students s2[], int tot_records1); //4
-void register_student(string id, string course, courses c1[], int ctot_records, cs_students cs1[], int cstot_records, registration r1[], int rtot_records); //5
-bool prereq_check(string id, string courser,courses c1[], int ctot_records,courses csingle, cs_students cs1[], int cstot_records); //5
-bool sem_check(string courser ,courses csingle,courses c1[], int ctot_records, cs_students cs1[], int cstot_records); //5
-bool already_registered(string id, string courser, registration r1[], int rtot_records);//5
-bool alreadydone_course(string id, string course,cs_students csptxt[],int cstot_records); //5
-bool donealllevel_check(string id, string course, courses c1[], int ctot_records, cs_students cs1[], int cstot_records); //5
-bool enrollmentcounter(string id,registration r1[], int rtot_records); //5
-void write_registrations(string id, string course); //5
-void display_registrations(registration r1[], int rtot_records); //6
-void display_semsters(string id,registration r1[], int rtot_records,cs_students cs1[], int cstot_records); //7
+//***************************************************************
+//    	function declaration
+//***************************************************************
+void intro(); //displays intro
+void displayall(students s1[],int tot_records ); //displays all students
+void display_courses( courses c1[MAX_SIZE], int tot_records); //displays all courses
+void course_lookup(string c, registration r1[], int tot_records2, students s2[], int tot_records1); //displays students info this entered course
+void displaypersonal(int numid, students s2[], int tot_records1); //displays personal info for option 4
+void register_student(string id, string course, courses c1[], int ctot_records, cs_students cs1[], int cstot_records, registration r1[], int rtot_records); //Risgisters a student
+bool prereq_check(string id, string courser,courses c1[], int ctot_records,courses csingle, cs_students cs1[], int cstot_records); //check if prereq is done
+bool sem_check(string courser ,courses csingle,courses c1[], int ctot_records, cs_students cs1[], int cstot_records); //check semester
+bool already_registered(string id, string courser, registration r1[], int rtot_records);//check if already registered
+bool alreadydone_course(string id, string course,cs_students csptxt[],int cstot_records); //check if course is already done
+bool donealllevel_check(string id, string course, courses c1[], int ctot_records, cs_students cs1[], int cstot_records); //check if all previous lvl courses are done
+bool enrollmentcounter(string id,registration r1[], int rtot_records); //check the number of courses a student is registered too
+void write_registrations(string id, string course); //updates registration txt file
+void display_registrations(registration r1[], int rtot_records); //displays registration
+void display_semsters(string id,registration r1[], int rtot_records,cs_students cs1[], int cstot_records); //display semesters left for course completion
 
-void discard_line(ifstream &in); //for reading files
+//***************************************************************
+//    	function declaration for reading txt files
+//***************************************************************
+void discard_line(ifstream &in); //for removing spaces
 void open_coursestxt(ifstream& cstudent, courses* c1, int& tot_records);
 void open_studenttxt( ifstream& rstudents,students* s2,int& tot_records);
 void open_registrationtxt(ifstream& registers, registration* r1,int& tot_records2);
@@ -38,9 +48,13 @@ void open_cstxt(ifstream& csflie, cs_students * cs1,int& tot_records);
 
 
 
-
+//***************************************************************
+//    	THE MAIN FUNCTION OF PROGRAM
+//****************************************************************
 int main()
 {
+    // This program build the course approval system for USP. Currently, during the registration week academics manually check if a student is meeting prerequisites for a given course.
+
     char choice;
     string course,id, courser;
     ifstream rstudents;
@@ -81,6 +95,11 @@ int main()
         cout<<"\n\n\t6. Display all registration";
         cout<<"\n\n\t7. Display number of semesters a student will take to complete all CS courses";
         cout<<"\n\n\tSelect Your Option (1-7): ";cin>>choice;
+        while (choice!='1'&& choice !='2'&& choice !='3'&& choice !='4'&& choice !='5'&& choice !='6'&& choice !='7')
+        {
+            cout<<"\tIncorrect choice entered.....re-enter choice again: ";
+            cin>>choice;
+        }
         // system("cls");
         
         switch(choice)
@@ -97,7 +116,7 @@ int main()
             case '4':
                cout<<"\n\n\tEnter Course ID: ";cin>>course;
                while (course!="cs111"&& course !="cs112"&& course != "cs240"&& course !="cs241"&& course !="cs214"&& course !="cs215"&& course !="cs218"&& course !="cs310"&&course != "cs311"&&course !="cs317"&&course !="cs318"&&course !="cs324"&&course != "cs341"){
-                    cout<<"\n\tIncorrect course entered.....re-enter course again: ";
+                    cout<<"\tIncorrect course entered.....re-enter course again: "; //validation
                     cin>>course;
                 }
                 course_lookup(course, r1, rtot_records, s1, stot_records);
@@ -107,12 +126,12 @@ int main()
                 cout<<"\n\n\tEnter your ID: ";cin>>id;
                 while (id!="s111"&& id !="s222"&& id != "s333"&& id !="s444")
                 {
-                    cout<<"\n\tIncorrect ID entered.....re-enter ID again: ";
+                    cout<<"\tIncorrect ID entered.....re-enter ID again: ";
                     cin>>id;
                 }
                 cout<<"\n\tEnter Course you would like to register to: ";cin>>courser;
                 while (courser!="cs111"&& courser !="cs112"&& courser != "cs240"&& courser !="cs241"&& courser !="cs214"&& courser !="cs215"&& courser !="cs218"&& courser !="cs310"&&courser != "cs311"&&courser !="cs317"&&courser !="cs318"&&courser !="cs324"&&courser != "cs341"){
-                    cout<<"\n\tIncorrect course entered.....re-enter course again: ";
+                    cout<<"\tIncorrect course entered.....re-enter course again: ";
                     cin>>courser;
                 }
                 register_student(id, courser, c1, ctot_records, cs1, cstot_records, r1, rtot_records);
@@ -124,7 +143,7 @@ int main()
                 cout<<"\n\n\tEnter your ID: ";cin>>id;
                 while (id!="s111"&& id !="s222"&& id != "s333"&& id !="s444")
                 {
-                    cout<<"\n\tIncorrect ID entered.....re-enter ID again: ";
+                    cout<<"\tIncorrect ID entered.....re-enter ID again: ";
                     cin>>id;
                 }
                 display_semsters(id, r1, rtot_records, cs1, cstot_records);
