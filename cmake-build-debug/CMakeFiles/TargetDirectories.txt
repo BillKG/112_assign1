@@ -1,0 +1,3 @@
+/Users/naisua/Desktop/BSE_2018/dev/c++/course-approval-system/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/naisua/Desktop/BSE_2018/dev/c++/course-approval-system/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/naisua/Desktop/BSE_2018/dev/c++/course-approval-system/cmake-build-debug/CMakeFiles/course_approval_system.dir

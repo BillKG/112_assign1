@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/naisua/Desktop/BSE_2018/dev/c++/course-approval-system/main.cpp
+iostream
+-
+model/course.h
+/Users/naisua/Desktop/BSE_2018/dev/c++/course-approval-system/model/course.h
+model/cs_student.h
+/Users/naisua/Desktop/BSE_2018/dev/c++/course-approval-system/model/cs_student.h
+model/registration.h
+/Users/naisua/Desktop/BSE_2018/dev/c++/course-approval-system/model/registration.h
+model/student.h
+/Users/naisua/Desktop/BSE_2018/dev/c++/course-approval-system/model/student.h
+fstream
+-
+
+/Users/naisua/Desktop/BSE_2018/dev/c++/course-approval-system/model/course.h
+string
+-
+
+/Users/naisua/Desktop/BSE_2018/dev/c++/course-approval-system/model/cs_student.h
+string
+-
+student.h
+/Users/naisua/Desktop/BSE_2018/dev/c++/course-approval-system/model/student.h
+
+/Users/naisua/Desktop/BSE_2018/dev/c++/course-approval-system/model/registration.h
+string
+-
+
+/Users/naisua/Desktop/BSE_2018/dev/c++/course-approval-system/model/student.h
+string
+-
+
